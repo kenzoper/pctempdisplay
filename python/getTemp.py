@@ -1,25 +1,26 @@
 import wmi
 import serial
+import time
 
-##ser = serial.Serial('COM3', 9600)  
+ser = serial.Serial('COM3', 9600)  
 
-def get_gpu_temp():
+def get_gpu_temp() -> int:
 
     w = wmi.WMI(namespace="root\OpenHardwareMonitor")
 
     temperature_infos = w.Sensor()
     for sensor in temperature_infos:
             if sensor.SensorType == u'Temperature' and 'GPU' in sensor.Name:
-                return sensor.Value
+                return int(round(sensor.Value))
 
-def get_cpu_temp():
+def get_cpu_temp() -> int:
 
     w = wmi.WMI(namespace="root\OpenHardwareMonitor")
 
     temperature_infos = w.Sensor()
     for sensor in temperature_infos:
             if sensor.SensorType == u'Temperature' and 'CPU' in sensor.Name:
-                return sensor.Value
+                return int(round(sensor.Value))
 
 def send_temp(sensor, temp):
     value_to_send = 8 * [0]
@@ -32,17 +33,24 @@ def send_temp(sensor, temp):
 
 
 if __name__ == "__main__":
-    gpu_temp = get_gpu_temp()
-    cpu_temp = get_cpu_temp()
 
-    print(f"GPU Temperature: {gpu_temp} °C")
-    print(f"CPU Temperature: {cpu_temp} °C")
+    try:
+        while True: 
+            gpu_temp = get_gpu_temp()
+            cpu_temp = get_cpu_temp()
 
-    send_temp('CPU',int(cpu_temp))
+            print(f"GPU Temperature: {gpu_temp} °C")
+            print(f"CPU Temperature: {cpu_temp} °C")
 
-    ##ser.write(f"{value_to_send}\n".encode())  
-
-    ##ser.close()
+            # send_temp('CPU',int(cpu_temp))
+            ser.write(f"C {cpu_temp}\n".encode())
+            time.sleep(0.05)
+            ser.write(f"G {gpu_temp}\n".encode())
+            time.sleep(0.5)
+    
+    except KeyboardInterrupt:
+        print("Ctrl-C was pressed. Closing port cleanly...")    
+        ser.close()
 
 
 
