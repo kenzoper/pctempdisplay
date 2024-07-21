@@ -6,25 +6,44 @@ Adafruit_7segment gDisplay = Adafruit_7segment();
 
 const uint8_t kBuiltinLed = 13;
 
-void setup() {
+void setup()
+{
   pinMode(kBuiltinLed, OUTPUT);
 
   gDisplay.begin(0x70);
   gDisplay.setBrightness(12);
-  gDisplay.print("foo");
+  gDisplay.print("bar");
   gDisplay.writeDisplay();
-  delay(2000);
+  delay(5000);
 }
 
-void loop() {
+void loop()
+{
 
-  if (Serial.available()) {
+  static int cpuTemp = 0;
+  static int gpuTemp = 0;
+
+  if (Serial.available())
+  {
     String receivedData = Serial.readStringUntil('\n');
-    float temperature = receivedData.toFloat();
+    char system = receivedData[0];
 
-    gDisplay.print(temperature);
+    int temperature = receivedData.substring(2).toInt();
+
+    switch (system)
+    {
+    case 'C':
+      cpuTemp = temperature;
+      break;
+    case 'G':
+      gpuTemp = temperature;
+      break;
+    default:
+      break;
+    }
+    gDisplay.print(cpuTemp * 100 + gpuTemp);
+    gDisplay.writeDigitRaw(2, 0x02);
     gDisplay.writeDisplay();
     delay(1000);
   }
-
 }
