@@ -1,5 +1,12 @@
 # pctempdisplay
 
+## Components
+
+- [Adafruit Dual Alphanumeric Display](https://www.adafruit.com/product/2153)
+- [Adafruit ItsyBitsy M0 Express](https://www.adafruit.com/product/3727)
+- [Adafruit 14-segment LED Alphanumeric Backpack](https://www.adafruit.com/product/1910)
+- [Adafruit DotStar Digital LED Strip - Black 144 LED/m](https://www.adafruit.com/product/2328)
+
 ## Connections
 
 ### Dostar
