@@ -2,7 +2,9 @@
 
 ## First Prototype
 
-![First Proto](./pictures/displayPrototype.jpg | width=50)
+![First Proto](./pictures/displayPrototype.jpg)
+
+<img src="./pictures/displayPrototype.jpg" width="50">
 
 ## Components
 
