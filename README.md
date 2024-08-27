@@ -1,13 +1,13 @@
 # pctempdisplay
 
-##Connections
+## Connections
 
-###Dostar
+## #Dostar
 
 Yellow = CLK | SCQ #30
 Green = DATA | MOSI #29
 
-###Backpack
+### Backpack
 
 Blue = SDA
 Yellow = SCL
