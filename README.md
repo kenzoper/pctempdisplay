@@ -1,5 +1,9 @@
 # pctempdisplay
 
+## First Prototype
+
+![First Proto](./pictures/displayPrototype.jpg)
+
 ## Components
 
 - [Adafruit Dual Alphanumeric Display](https://www.adafruit.com/product/2153)
